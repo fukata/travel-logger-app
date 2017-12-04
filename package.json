@@ -1,0 +1,32 @@
+{
+  "name": "lite-gps-logger-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-native-scripts-ts": "1.7.0",
+    "@types/react": "^16.0.5",
+    "@types/react-native": "^0.48.4",
+    "@types/react-test-renderer": "^15.5.4",
+    "jest-expo-ts": "^20.0.0",
+    "react-native-typescript-transformer": "^1.1.4",
+    "react-test-renderer": "16.0.0-alpha.12",
+    "tslib": "^1.7.1",
+    "typescript": "^2.5.2"
+  },
+  "main": "./node_modules/react-native-scripts-ts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts-ts start",
+    "eject": "react-native-scripts-ts eject",
+    "android": "react-native-scripts-ts android",
+    "ios": "react-native-scripts-ts ios",
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
+  "jest": {
+    "preset": "jest-expo-ts"
+  },
+  "dependencies": {
+    "expo": "^20.0.0",
+    "react": "16.0.0-alpha.12",
+    "react-native": "^0.47.0"
+  }
+}
