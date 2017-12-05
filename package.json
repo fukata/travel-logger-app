@@ -4,14 +4,14 @@
   "private": true,
   "devDependencies": {
     "react-native-scripts-ts": "1.7.0",
-    "@types/react": "^16.0.5",
-    "@types/react-native": "^0.48.4",
-    "@types/react-test-renderer": "^15.5.4",
-    "jest-expo-ts": "^20.0.0",
+    "@types/react": "^16.0.26",
+    "@types/react-native": "^0.50.7",
+    "@types/react-test-renderer": "^16.0.0",
+    "jest-expo-ts": "^22.0.0",
     "react-native-typescript-transformer": "^1.1.4",
-    "react-test-renderer": "16.0.0-alpha.12",
-    "tslib": "^1.7.1",
-    "typescript": "^2.5.2"
+    "react-test-renderer": "16.0.0",
+    "tslib": "^1.8.0",
+    "typescript": "^2.6.2"
   },
   "main": "./node_modules/react-native-scripts-ts/build/bin/crna-entry.js",
   "scripts": {
@@ -25,8 +25,8 @@
     "preset": "jest-expo-ts"
   },
   "dependencies": {
-    "expo": "^20.0.0",
-    "react": "16.0.0-alpha.12",
-    "react-native": "^0.47.0"
+    "expo": "^23.0.0",
+    "react": "16.2.0",
+    "react-native": "^0.50.4"
   }
 }
