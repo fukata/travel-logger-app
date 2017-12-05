@@ -14,7 +14,7 @@ export default class Home extends React.Component {
     console.log("onStartButtonPress");
     if (this.worker === null) {
       console.log("Generate worker...");
-      this.worker = new Worker('../workers/RecordingWorker.js');
+      this.worker = new Worker('../workers/RecordingWorker', 'workers.RecordingWorker', 8082);
     }
     this.worker.onmessage = (message) => {
       console.log("received message from worker. message=%s", message);
