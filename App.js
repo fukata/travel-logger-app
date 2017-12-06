@@ -1,16 +1,24 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Router, Stack, Scene } from 'react-native-router-flux';
 import Home from './components/Home';
+import LocationLogs from './components/LocationLogs';
+import Settings from './components/Settings';
+import { TabNavigator } from 'react-navigation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Router>
-        <Stack key="root">
-          <Scene key="home" initial component={Home} title="Travel Logger" />
-        </Stack>
-      </Router>
-    );
+const App = TabNavigator({
+  Home: { screen: Home },
+  LocationLogs: { screen: LocationLogs },
+  Settings: { screen: Settings },
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  swipeEnabled: true,
+  tabBarOptions: {
+    activeTintColor: '#ffffff',
+    style: {
+      backgroundColor: '#2f2f2f',
+    }
   }
-}
+});
+
+export default App;

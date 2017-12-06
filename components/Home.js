@@ -1,9 +1,48 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import Moment from 'moment';
 
+const CACHE_MAX_LOCATION_LOG_NUM = 100;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  buttonsContainer: {
+    flex: 0.1,
+    flexDirection: 'row',
+  },
+  startButton: {
+    flex: 1,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1d85f4',
+  },
+  stopButton: {
+    flex: 1,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ff1e2d',
+  },
+  buttonText: {
+    color: 'white',
+  },
+  consoleContainer: {
+    backgroundColor:"#000",
+  },
+  console: {
+    color:"#fff",
+  },
+});
+
 export default class Home extends React.Component {
+  static navigationOptions = {
+    tabBarLabel: 'Home',
+  };
+
   constructor(props) {
     super(props);
     this.state = {last_message: "", location_logs: []};
@@ -15,8 +54,8 @@ export default class Home extends React.Component {
       desiredAccuracy: 10,
       stationaryRadius: 50,
       distanceFilter: 50,
-      //notificationTitle: 'Background tracking',
-      //notificationText: 'enabled',
+      notificationTitle: 'Background tracking',
+      notificationText: 'enabled',
       debug: false,
       startOnBoot: false,
       stopOnTerminate:  false,
@@ -32,7 +71,7 @@ export default class Home extends React.Component {
       var location_log = Moment(Date.now()).format() + "\t" + JSON.stringify(location);
       var location_logs = this.state.location_logs;
       location_logs.unshift(location_log);
-      if (location_logs.length > 10) {
+      if (location_logs.length > CACHE_MAX_LOCATION_LOG_NUM) {
         location_logs.pop();
       }
       this.setState((ps) => {
@@ -87,29 +126,28 @@ export default class Home extends React.Component {
   }
   onStopButtonPress() {
     console.log("onStopButtonPress");
-    BackgroundGeolocation.events.forEach(event => BackgroundGeolocation.removeAllListeners(event));
     BackgroundGeolocation.stop();
     this.setState((ps) => {
       ps.last_message = "STOPPED";
       return ps;
     })
-
   }
   render() {
     return (
-      <View>
-        <Button
-          onPress={this.onStartButtonPress}
-          title="Start"
-          color="#1d85f4"
-          />
-        <Button
-          onPress={this.onStopButtonPress}
-          title="Stop"
-          color="#ff1e2d"
-          />
-        <Text>Last Message: {this.state.last_message}</Text>
-        <Text style={{color:"#fff", backgroundColor:"#000"}}>{this.state.location_logs.join("\n")}</Text>
+      <View style={styles.container}>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity onPress={this.onStartButtonPress} style={styles.startButton}>
+            <Text style={styles.buttonText}>START</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onStopButtonPress} style={styles.stopButton}>
+            <Text style={styles.buttonText}>STOP</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text>STATUS: {this.state.last_message}</Text>
+        <ScrollView style={styles.consoleContainer}>
+          <Text style={styles.console}>{this.state.location_logs.join("\n")}</Text>
+        </ScrollView>
       </View>
     );
   }
