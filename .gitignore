@@ -1,3 +1,7 @@
+# vim
+*.swp
+*.swo
+
 # OSX
 #
 .DS_Store
@@ -51,3 +55,5 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+android/app/src/main/assets/index.bundle*

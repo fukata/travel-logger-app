@@ -1,4 +1,6 @@
 rootProject.name = 'TravelLogger'
+include ':react-native-mauron85-background-geolocation'
+project(':react-native-mauron85-background-geolocation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mauron85-background-geolocation/android/lib')
 include ':react-native-workers'
 project(':react-native-workers').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-workers/android')
 

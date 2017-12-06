@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TravelLogger</string>
+  <string name="app_name">TravelLogger</string>
+  <string name="account_type">com.travellogger.account</string>
+  <string name="content_authority">com.travellogger.authority</string>
 </resources>
