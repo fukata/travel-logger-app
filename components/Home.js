@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 import Moment from 'moment';
+var RNFS = require('react-native-fs');
 
 const CACHE_MAX_LOCATION_LOG_NUM = 100;
 
@@ -78,7 +79,11 @@ export default class Home extends React.Component {
         ps.last_message = location_log;
         ps.location_logs = location_logs;
         return ps;
-      })
+      });
+
+      if (this.state.log_file_path) {
+        RNFS.appendFile(this.state.log_file_path, location_log);
+      }
     });
 
     BackgroundGeolocation.on('error', (error) => {
@@ -109,8 +114,20 @@ export default class Home extends React.Component {
   }
   onStartButtonPress() {
     console.log("onStartButtonPress");
+    if (this.state.recording) {
+      console.log("Already started recording");
+      return;
+    }
+
+    const log_file_name = Moment(Date.now()).format("YYYYMMDD_HHmmss") + ".gps.log";
+    const log_file_path = RNFS.ExternalStorageDirectoryPath + "/TravelLogger/" + log_file_name;
+    console.log("log_file_name: ", log_file_name);
+    console.log("log_file_path: ", log_file_path);
     this.setState((ps) => {
       ps.last_message = "Waiting...";
+      ps.recording = true;
+      ps.log_file_name = log_file_name;
+      ps.log_file_path = log_file_path;
       return ps;
     })
     BackgroundGeolocation.checkStatus(status => {
@@ -129,6 +146,9 @@ export default class Home extends React.Component {
     BackgroundGeolocation.stop();
     this.setState((ps) => {
       ps.last_message = "STOPPED";
+      ps.recording = false;
+      ps.log_file_name = "";
+      ps.log_file_path = "";
       return ps;
     })
   }
