@@ -58,11 +58,11 @@ export default class LocationLogs extends React.Component {
           for (let file of result.reverse()) {
             this.location_log_files.push(file);
           }
-          this.setState((prevState) => {
-            prevState.dataSource = ds.cloneWithRows(this.location_log_files);
-            return prevState;
-          });
         }
+        this.setState((prevState) => {
+          prevState.dataSource = ds.cloneWithRows(this.location_log_files);
+          return prevState;
+        });
       })
       .catch((err) => {
         console.log(err.message);
@@ -121,6 +121,7 @@ export default class LocationLogs extends React.Component {
     return (
       <View style={{flex:1}}>
         <ListView
+          enableEmptySections={true}
           dataSource={this.state.dataSource}
           renderRow={
             (rowData) => (
