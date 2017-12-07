@@ -14,6 +14,7 @@ def parse_options
     opt.on('--output PATH', '/path/to/output') {|v| options[:output] = v }
     opt.parse!(ARGV)
   end
+  options[:config] = 'config.local.yml' if options[:config].blank? && File.exist?('config.local.yml')
   if options[:config]
     options[:config] = YAML.load_file(options[:config]).deep_symbolize_keys
   end
