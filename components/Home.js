@@ -82,7 +82,7 @@ export default class Home extends React.Component {
       });
 
       if (this.state.log_file_path) {
-        RNFS.appendFile(this.state.log_file_path, location_log);
+        RNFS.appendFile(this.state.log_file_path, location_log + "\n");
       }
     });
 
@@ -119,7 +119,7 @@ export default class Home extends React.Component {
       return;
     }
 
-    const log_file_name = Moment(Date.now()).format("YYYYMMDD_HHmmss") + ".location.log";
+    const log_file_name = Moment(Date.now()).utc().format("YYYYMMDD_HHmmss") + ".location.log";
     const log_file_path = RNFS.ExternalStorageDirectoryPath + "/TravelLogger/" + log_file_name;
     console.log("log_file_name: ", log_file_name);
     console.log("log_file_path: ", log_file_path);
