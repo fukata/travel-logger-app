@@ -3,6 +3,7 @@ package com.travellogger;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import cl.json.RNSharePackage;
 import com.rnfs.RNFSPackage;
 import com.marianhello.react.BackgroundGeolocationPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSensitiveInfoPackage(),
             new RNSharePackage(),
             new RNFSPackage(),
             new BackgroundGeolocationPackage(),
