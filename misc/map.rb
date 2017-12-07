@@ -2,16 +2,20 @@
 require 'bundler'
 Bundler.require
 
+require 'yaml'
 require 'active_support'
 require 'active_support/core_ext'
 
 def parse_options
   options = {}
   OptionParser.new do |opt|
-    opt.on('--location PATH', '/path/to/location/file') {|v| options[:location] = v }
-    opt.on('--google-api-key KEY', 'YOUR API KEY') {|v| options[:google_api_key] = v }
+    opt.on('--config PATH', '/path/to/config') {|v| options[:config] = v }
+    opt.on('--location PATH', '/path/to/location_file') {|v| options[:location] = v }
     opt.on('--output PATH', '/path/to/output') {|v| options[:output] = v }
     opt.parse!(ARGV)
+  end
+  if options[:config]
+    options[:config] = YAML.load_file(options[:config]).deep_symbolize_keys
   end
   options
 end

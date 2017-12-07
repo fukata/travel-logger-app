@@ -50,7 +50,7 @@
         flightPath.setMap(map);
       }
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= opt[:google_api_key] %>&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= opt[:config][:google_api_key] %>&callback=initMap">
     </script>
   </body>
 </html>
