@@ -1,7 +1,34 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, ListView, RefreshControl } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ListView,
+  RefreshControl,
+  TouchableOpacity,
+  PixelRatio,
+  Alert
+} from 'react-native';
+import Share from 'react-native-share';
+
 var RNFS = require('react-native-fs');
 var sprintf = require('sprintf-js').sprintf;
+
+const styles = StyleSheet.create({
+  row: {
+    height: 40,
+    flex: 1,
+    justifyContent: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1 / PixelRatio.get(),
+  },
+  rowText: {
+    width: '100%',
+    alignSelf: 'center',
+    textAlign: 'left',
+  },
+});
 
 export default class LocationLogs extends React.Component {
   static navigationOptions = {
@@ -41,6 +68,10 @@ export default class LocationLogs extends React.Component {
         console.log(err.message);
       });
   }
+  deleteFile(path) {
+    console.log("deleteFile", path);
+    return RNFS.unlink(path);
+  }
   formatFileSize(size) {
     var _size = size, _ext = "B";
     if (size > 1024) {
@@ -60,12 +91,44 @@ export default class LocationLogs extends React.Component {
     }
     return sprintf("%6.1f%s", _size, _ext);
   }
+  _onRowPress(file) {
+    console.log("onRowPress", file);
+    Alert.alert(
+      file.name,
+      '',
+      [
+        {text: 'Share', onPress: () => {
+          console.log('Share', file.path);
+          Share.open({
+            url: "file://" + file.path,
+            type: "application/octet-stream",
+          });
+        }},
+        {text: 'Delete', onPress: () => {
+          console.log('Delete', file.path);
+          this.deleteFile(file.path)
+            .finally(() => {
+              this.fetchData();
+            });
+
+        }},
+        {text: 'Close', onPress: () => {console.log('Close', file.path)}},
+      ],
+      { cancelable: true }
+    );
+  }
   render() {
     return (
       <View style={{flex:1}}>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(rowData) => (<Text>{this.formatFileSize(rowData.size)} {rowData.name}</Text>)}
+          renderRow={
+            (rowData) => (
+              <TouchableOpacity onPress={() => {this._onRowPress(rowData)}} style={styles.row}>
+                <Text style={styles.rowText}>{this.formatFileSize(rowData.size)} {rowData.name}</Text>
+              </TouchableOpacity>
+            )
+          }
           refreshControl = {
             <RefreshControl
               refreshing={this.state.refreshing}
