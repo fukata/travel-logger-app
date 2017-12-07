@@ -27,9 +27,9 @@
       // Brisbane, Australia.
 
       function initMap() {
-        <% center_location = locations.first -%>
+        <% center_location = locations.first %>
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 8,
+          zoom: 12,
           center: {lat: <%= center_location[:latitude] %>, lng: <%= center_location[:longitude] %>},
           mapTypeId: 'roadmap'
         });
