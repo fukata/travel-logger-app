@@ -11,6 +11,7 @@ import {
   Alert
 } from 'react-native';
 import Share from 'react-native-share';
+import Moment from 'moment';
 
 var RNFS = require('react-native-fs');
 var sprintf = require('sprintf-js').sprintf;
@@ -91,6 +92,12 @@ export default class LocationLogs extends React.Component {
     }
     return sprintf("%6.1f%s", _size, _ext);
   }
+  formatFileModifiedTime(mtime) {
+    if (mtime === null) {
+      return "YYYY-MM-DD HH:mm:ss";
+    }
+    return Moment(mtime).format('YYYY-MM-DD HH:mm:ss')
+  }
   _onRowPress(file) {
     console.log("onRowPress", file);
     Alert.alert(
@@ -126,7 +133,8 @@ export default class LocationLogs extends React.Component {
           renderRow={
             (rowData) => (
               <TouchableOpacity onPress={() => {this._onRowPress(rowData)}} style={styles.row}>
-                <Text style={styles.rowText}>{this.formatFileSize(rowData.size)} {rowData.name}</Text>
+                <Text style={styles.rowText}>{rowData.name}</Text>
+                <Text style={styles.rowText}>{this.formatFileSize(rowData.size)} {this.formatFileModifiedTime(rowData.mtime)}</Text>
               </TouchableOpacity>
             )
           }

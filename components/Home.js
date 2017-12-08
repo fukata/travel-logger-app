@@ -75,6 +75,10 @@ export default class Home extends React.Component {
 
     BackgroundGeolocation.on('error', (error) => {
       console.error("location error: %o", error);
+      this.setState((ps) => {
+        ps.last_message = "ERROR: " + error;
+        return ps;
+      })
     });
 
     BackgroundGeolocation.on('authorization', (status) => {
@@ -96,8 +100,8 @@ export default class Home extends React.Component {
     });
   }
   componentWillUnmount() {
-    BackgroundGeolocation.events.forEach(event => BackgroundGeolocation.removeAllListeners(event));
     BackgroundGeolocation.stop();
+    BackgroundGeolocation.events.forEach(event => BackgroundGeolocation.removeAllListeners(event));
   }
   async configureBackgroundGeolocation() {
     const desired_accuracy = await SInfo.getItem('desired_accuracy', SINFO_OPTIONS);
