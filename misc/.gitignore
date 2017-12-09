@@ -1,2 +1,6 @@
 vendor/bundle
+
+/log/*
+!/log/.keep
+
 config.local.yml
